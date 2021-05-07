@@ -1,23 +1,22 @@
 /*
 Author: Sergio Cosman Agraz
-Last updated: 05/03/2021
-
-No warranty provided for this product.  Use at your own risk.
+Last updated: 05/07/2021
 */
 
 "use strict";
 
 require("dotenv").config();
 
-const { BraveBuild } = require("./BraveBuild");
-
+const express = require('express');
+const https = require('https');
 const Discord = require("discord.js");
+
+const { BraveBuild } = require("./BraveBuild");
 
 const client = new Discord.Client();
 const prefix = "~";
 
-// Local variables and functions
-
+const app = express();
 
 client.on("message", async message => 
 {
@@ -81,3 +80,15 @@ client.on("message", async message =>
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
+
+app.get("/", (req, res) => {
+    console.log(Date.now() + " Ping Received");
+    res.sendStatus(200);
+});
+
+app.listen(process.env.PORT);
+
+setInterval(() => 
+{
+    https.get(`https://shyvana-bot.azurewebsites.net`);
+}, 900000);
