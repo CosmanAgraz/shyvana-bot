@@ -8,50 +8,76 @@ No warranty provided for this product.  Use at your own risk.
 "use strict";
 
 require("dotenv").config();
-const { getData } = require("./util/getData");
+
+const { BraveBuild } = require("./BraveBuild");
 
 const Discord = require("discord.js");
 
 const client = new Discord.Client();
 const prefix = "~";
 
-const main = async () => 
+// Local variables and functions
+
+
+client.on("message", async message => 
 {
-    // Fetch data once before initializing bot loop.
-    const itemData = await getData("item");
-    const summonerSpells = await getData("summoner");
-    const championData = await getData("character");
 
-    client.on("message", async message => 
+    // constraints
+    if ( message.author.bot || !message.content.startsWith(prefix) ) { return };
+
+    //parse message
+    const command = message.content.slice(prefix.length);
+
+    // response to `!brave` command
+    if ( command === "brave" )
     {
+        const braveBuild = new BraveBuild();
+        const champion = braveBuild.selectedChampion;
+        const items = braveBuild.selectedItems;
+        const summonerSpells = braveBuild.selectedSummonerSpells;
+        const ability = braveBuild.selectedAbility;
 
-        // constraints
-        if ( message.author.bot || !message.content.startsWith(prefix) ) { return };
+        message.reply(`
+        Champion:  **${champion}**
+        Max first:  **${ability}**
+        Summoner spells:  **${summonerSpells[0]}** & **${summonerSpells[1]}**
+        Items: 
+         • **${items[0]}**
+         • **${items[1]}**
+         • **${items[2]}**
+         • **${items[3]}**
+         • **${items[4]}**
+         • **${items[5]}**`);
 
-        //parse message
-        const command = message.content.slice(prefix.length);
+    };
 
-        // response to `!factz` command
-        if ( command === "brave" )
-        {
-            // TODO return brave build
+    if (command === "info" )
+    {
+        message.reply(`
+        **About brave build**
+        Random champion, random summoner spells, random skill sequence, random items.  *Are you brave?*
+        
+        **Rules**
+        1. You are guaranteed a pair of shoes in your build unless you get Cassiopea.
+        2. If you roll a champion you do not own, buy it.  (or roll again like the tryhard you are)
+        3. Runes?  HA!  Go look at probuilds.  As if **that** will save *you!*
+        
+        **LoL Patch**
+        11.9.1
+        
+        **Github Repo**
+        https://github.com/CosmanAgraz/shyvana-bot`);
+    }
 
-            
-        };
+    if ( command === "help" )
+    {
+        message.reply( `
+        **Commands**
+        \`\`~brave\`\` - Returns brave build
+        \`\`~info\`\` - Specifies brave rules
+        \`\`~help\`\` -  Prints this message :thumbs_up:`);
+    }
+    
+});
 
-        if (command === "info" )
-        {
-            message.channel.send( " ``\n**About brave build**\nRandom champion, random summoner spells, random skill sequence, random items.  Are you brave?\n\n**Rules**\n**1.** You are guaranteed a pair of shoes in your build unless you get Cassiopea.\n**2.** If you roll a champion you do not own, roll again. **3.** Runes?  HA!  As if that will save you!``" );
-        }
-
-        if ( command === "help" )
-        {
-            message.channel.send( " ``\nCommands:\n **~brave**: Returns brave build\n\n **~info**: Specifies brave rules\n\n **~help**: Prints this message :thumbs_up:\n`` " );
-        }
-        // other commands here //
-    });
-
-    client.login(process.env.DISCORD_BOT_TOKEN);
-}
-
-main();
+client.login(process.env.DISCORD_BOT_TOKEN);
