@@ -1,7 +1,7 @@
 "use strict";
 
-const { pickRandomElements } = require("./util/helperFunctions");
-const { champions, summonerSpells, items } = require("./util/getDataFromStatic");
+const { pickRandomItems, pickRandomElements, getRandomIndex } = require("./util/helperFunctions");
+const { champions, summonerSpells, items, championData } = require("./util/getDataFromStatic");
 
 class BraveBuild {
     constructor()
@@ -10,18 +10,26 @@ class BraveBuild {
         const abilities = ["Q", "W", "E"];
 
         // Randomly select 1 champion from array,
-        this.selectedChampion = champions[ Math.floor( Math.random() * 10 ) % champions.length ];
+        this.selectedChampion = champions[ getRandomIndex( champions.length ) ];
+
+
+        // TODO check if selected champion is melee
+        if (championData[this.selectedChampion].stats.attackrange < 199 )
+        {
+            this.isMelee = true;
+        }
         
+        // TODO
         itemStack.push( pickRandomElements( items.mythic, 1) );
         // This special snowflake doesn't wear boots
         if (this.selectedChampion === "Cassiopeia")
         {
-            itemStack.push( pickRandomElements( items.legendary, 5) );
+            itemStack.push( pickRandomItems( items.legendary, 5, this.isMelee ) );
         }
         else 
         {
-            itemStack.push( pickRandomElements( items.boots, 1) );
-            itemStack.push( pickRandomElements( items.legendary, 4) );
+            itemStack.push( pickRandomElements( items.boots, 1 ) );
+            itemStack.push( pickRandomItems( items.legendary, 4, this.isMelee ) );
         }
 
         this.selectedItems = itemStack.flat();
