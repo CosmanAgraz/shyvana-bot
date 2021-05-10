@@ -17,6 +17,7 @@ const client = new Discord.Client();
 const prefix = "~";
 
 const app = express();
+const PORT = process.env.PORT || 1988;
 
 client.on("message", async message => 
 {
@@ -30,11 +31,11 @@ client.on("message", async message =>
     // response to `!brave` command
     if ( command === "brave" )
     {
-        const braveBuild = new BraveBuild();
-        const champion = braveBuild.selectedChampion;
-        const items = braveBuild.selectedItems;
-        const summonerSpells = braveBuild.selectedSummonerSpells;
-        const ability = braveBuild.selectedAbility;
+        let braveBuild = new BraveBuild();
+        let champion = braveBuild.selectedChampion;
+        let items = braveBuild.selectedItems;
+        let summonerSpells = braveBuild.selectedSummonerSpells;
+        let ability = braveBuild.selectedAbility;
 
         message.reply(`
         Champion:  **${champion}**
@@ -63,6 +64,9 @@ client.on("message", async message =>
         
         **LoL Patch**
         11.9.1
+
+        **Bot version**
+        1.1
         
         **Github Repo**
         https://github.com/CosmanAgraz/shyvana-bot`);
@@ -86,9 +90,10 @@ app.get("/", (req, res) => {
     res.sendStatus(200);
 });
 
-app.listen(process.env.PORT);
+app.listen(PORT || 1988);
 
+// https://shyvana-bot.azurewebsites.net
 setInterval(() => 
 {
-    https.get(`https://shyvana-bot.azurewebsites.net`);
+    https.get(`localhost:${PORT}`);
 }, 900000);
