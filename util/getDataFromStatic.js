@@ -1,11 +1,12 @@
 "use strict";
 const FS = require("fs");
 
+const rawChampionData = JSON.parse( FS.readFileSync("./static/champion.json", {encoding: "utf8"} ) );
+const championData = rawChampionData.data;
+
 // returns champion names in array
 const getChampionData = () =>
 {
-    const rawChampionData = JSON.parse( FS.readFileSync("./static/champion.json", {encoding: "utf8"} ) );
-    const championData = rawChampionData.data;
     const championNames = [];
     
     for ( var key in championData )
@@ -67,8 +68,8 @@ const getValidItems = () =>
                 }
             }
     
-            // No boots in legendary items (technically, they are legendary items...)
-            if ( !(bootItems.includes(items[key].name)) && !(items[key].name === "Corrupting Potion") )
+            // No boots in legendary items (technically, they are legendary items...), No Corrupting Pot, and NO SPATULAS!!
+            if ( !(bootItems.includes(items[key].name)) && !(items[key].name === "Corrupting Potion") && !(items[key].name === "The Golden Spatula") )
             {
                 legendaryItems.push(items[key].name);
             }
@@ -83,11 +84,13 @@ const getValidItems = () =>
 }
 
 const champions = getChampionData();
+console.log(champions);
 const summonerSpells = getValidSummonerSpells();
 const items = getValidItems();
 
 module.exports = {
     champions,
     summonerSpells,
-    items
+    items,
+    championData
 };
