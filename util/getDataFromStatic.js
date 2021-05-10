@@ -84,7 +84,6 @@ const getValidItems = () =>
 }
 
 const champions = getChampionData();
-console.log(champions);
 const summonerSpells = getValidSummonerSpells();
 const items = getValidItems();
 
