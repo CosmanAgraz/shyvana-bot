@@ -1,7 +1,16 @@
+"use strict";
+
+//returns number between 0 and max (lenght of array)
+const getRandomIndex = ( max ) => 
+{
+    max = Math.floor( max );
+    return Math.floor( Math.random() * ( max ) );
+}
+
 const shuffle = array => 
 {
     // non-destructive
-    let result = array;
+    let result = [...array];
     var currentIndex = result.length, temporaryValue, randomIndex;
   
     // While there remain elements to shuffle...
@@ -33,4 +42,82 @@ const pickRandomElements = ( array, n ) =>
     return result;
 }
 
-module.exports = { pickRandomElements };
+// Not all items go well with each other
+// Expect this routine to be changing constantly because League of Legends changes their rules constantly.
+const pickRandomItems = ( array, n, isMelee ) =>
+{
+    let itemStack = [];
+    let shuffled = shuffle( array );
+
+    for ( var i=0; i < n; i++ )
+    {
+        // Arbitrary constraints Go here
+        // Basically, just pop without pushing to item stack if condition is met.
+
+        /* Optimization notes:
+        // array.prototype.includes() is O(n).  This would be pretty bad if the array would be large.
+        // Set.has() is O(1).
+        */
+
+        if ( shuffled[ shuffled.length-1 ] === "Infinity Edge" && itemStack.includes("Guinsoo's Rageblade") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Guinsoo's Rageblade" && itemStack.includes("Infinity Edge") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Maw of Malmortius" && itemStack.includes("Sterak's Gage") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Sterak's Gage" && itemStack.includes("Maw of Malmortius") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Manamune" && itemStack.includes("Archangel's Staff") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Archangel's Staff" && itemStack.includes("Manamune") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Ravenous Hydra" && itemStack.includes("Titanic Hydra") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Titanic Hydra" && itemStack.includes("Ravenous Hydra") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Lord Dominik's Regards" && itemStack.includes("Serylda's Grudge") )
+        {
+            shuffled.pop();
+        }
+
+        if ( shuffled[ shuffled.length-1 ] === "Serylda's Grudge" && itemStack.includes("Lord Dominik's Regards") )
+        {
+            shuffled.pop();
+        }
+
+        if ( isMelee && shuffled[ shuffled.length-1 ] === "Runaan's Hurricane" )
+        {
+            shuffled.pop();
+        }
+
+        itemStack.push( shuffled.pop() );
+    }
+
+    return itemStack;
+}
+
+module.exports = { pickRandomElements, getRandomIndex, pickRandomItems };
