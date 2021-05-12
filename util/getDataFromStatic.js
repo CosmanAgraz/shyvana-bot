@@ -83,6 +83,13 @@ const getValidItems = () =>
      } 
 }
 
+const getRuneData = () =>
+{
+    const runeData = JSON.parse( FS.readFileSync("./static/runesReforged.json", {encoding: "utf8"} ) );
+
+    return runeData;
+} 
+
 const champions = getChampionData();
 const summonerSpells = getValidSummonerSpells();
 const items = getValidItems();
@@ -91,5 +98,6 @@ module.exports = {
     champions,
     summonerSpells,
     items,
-    championData
+    championData,
+    runeData
 };

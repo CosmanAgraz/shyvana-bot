@@ -10,3 +10,6 @@ http://ddragon.leagueoflegends.com/cdn/11.9.1/data/en_US/item.json
 
 **Champions**
 http://ddragon.leagueoflegends.com/cdn/11.9.1/data/en_US/champion.json
+
+**Runes**
+http://ddragon.leagueoflegends.com/cdn/10.16.1/data/en_US/runesReforged.json

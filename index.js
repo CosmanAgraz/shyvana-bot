@@ -92,8 +92,7 @@ app.get("/", (req, res) => {
 
 app.listen(PORT || 1988);
 
-// https://shyvana-bot.azurewebsites.net
-setInterval(() => 
+setInterval( () => 
 {
-    https.get(`localhost:${PORT}`);
+    https.get(`${process.env.SERVER_ADDRESS}:${PORT}`);
 }, 900000);
