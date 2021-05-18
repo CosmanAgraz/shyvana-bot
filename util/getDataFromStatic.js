@@ -93,6 +93,7 @@ const getRuneData = () =>
 const champions = getChampionData();
 const summonerSpells = getValidSummonerSpells();
 const items = getValidItems();
+const runeData = getRuneData();
 
 module.exports = {
     champions,

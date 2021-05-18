@@ -2,6 +2,7 @@
 
 const { pickRandomItems, pickRandomElements, getRandomIndex } = require("./util/helperFunctions");
 const { champions, summonerSpells, items, championData } = require("./util/getDataFromStatic");
+const { RuneBuild } = require("./RuneBuild");
 
 class BraveBuild {
     constructor()
@@ -40,6 +41,7 @@ class BraveBuild {
         // Randomly select 2 DIFFERENT validSummonerSpells
         this.selectedSummonerSpells = pickRandomElements( summonerSpells, 2 );
 
+        this.runeBuild = new RuneBuild();
     }
     
 }

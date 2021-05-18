@@ -19,6 +19,9 @@ const prefix = "~";
 const app = express();
 const PORT = process.env.PORT || 1988;
 
+const icon = new Discord.MessageAttachment('./img/round-logo.png');
+const logo = new Discord.MessageAttachment('./img/legacylogo.png');
+
 client.on("message", async message => 
 {
 
@@ -37,17 +40,70 @@ client.on("message", async message =>
         let summonerSpells = braveBuild.selectedSummonerSpells;
         let ability = braveBuild.selectedAbility;
 
-        message.reply(`
-        Champion:  **${champion}**
-        Max first:  **${ability}**
-        Summoner spells:  **${summonerSpells[0]}** & **${summonerSpells[1]}**
-        Items: 
-         • **${items[0]}**
-         • **${items[1]}**
-         • **${items[2]}**
-         • **${items[3]}**
-         • **${items[4]}**
-         • **${items[5]}**`);
+        let masteryRunes = braveBuild.runeBuild.masteryRunes;
+        let statRunes = braveBuild.runeBuild.statRunes;
+
+        //image
+        let championImage = new Discord.MessageAttachment(`./img/champion/${champion}.png`);
+
+        let embedBotMessage = 
+        {
+            color: 0x0099ff,
+            title: 'Ultimate Bravery',
+            thumbnail: {
+                url: `attachment://${champion}.png`,
+            },
+            fields: [
+                {
+                    name: `${champion}`,
+                    value: `Max **${ability}**`,
+                    inline: true
+                },
+                {
+                    name: 'Summoner Spells',
+                    value: `**${summonerSpells[0]}** & **${summonerSpells[1]}**`,
+                    inline: true,
+                },
+                {
+                    name: 'Items',
+                    value: `• ${items[0]}
+                    • ${items[1]}
+                    • ${items[2]}
+                    • ${items[3]}
+                    • ${items[4]}
+                    • ${items[5]}`,
+                    inline: false,
+                },
+                {
+                    name: 'Runes',
+                    value: `\u200b\u200b ${masteryRunes.keystone}
+                    \u200b\u200b ${masteryRunes.pRune1}
+                    \u200b\u200b ${masteryRunes.pRune2}
+                    \u200b\u200b ${masteryRunes.pRune3}`,
+                    inline: true,
+                },
+                {
+                    name: '\u200b',
+                    value: `\u200b\u200b ${masteryRunes.sRune1}
+                    \u200b\u200b ${masteryRunes.sRune2}`,
+                    inline: true,
+                },
+                {
+                    name: '\u200b',
+                    value: `\u200b\u200b ${statRunes.offenseRune}
+                    \u200b\u200b ${statRunes.flexRune}
+                    \u200b\u200b ${statRunes.defenseRune}`,
+                    inline: true,
+                },
+            ],
+            timestamp: new Date(),
+            footer: {
+                text: 'Sergio Cosman Agraz',
+                icon_url: 'attachment://round-logo.png',
+            },
+        };
+        
+        message.channel.send({ files: [icon, championImage], embed: embedBotMessage });
 
     };
 
@@ -66,7 +122,7 @@ client.on("message", async message =>
         11.9.1
 
         **Bot version**
-        1.1
+        1.2
         
         **Github Repo**
         https://github.com/CosmanAgraz/shyvana-bot`);
@@ -80,7 +136,6 @@ client.on("message", async message =>
         \`\`~info\`\` - Specifies brave rules
         \`\`~help\`\` -  Prints this message :thumbs_up:`);
     }
-    
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
