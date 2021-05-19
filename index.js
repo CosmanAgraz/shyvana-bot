@@ -8,7 +8,6 @@ Last updated: 05/07/2021
 require("dotenv").config();
 
 const express = require('express');
-const https = require('https');
 const Discord = require("discord.js");
 
 const { BraveBuild } = require("./BraveBuild");
@@ -31,7 +30,7 @@ client.on("message", async message =>
     //parse message
     const command = message.content.slice(prefix.length);
 
-    // response to `!brave` command
+    // response to `~brave` command
     if ( command === "brave" )
     {
         let braveBuild = new BraveBuild();
@@ -146,8 +145,3 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT || 1988);
-
-setInterval( () => 
-{
-    https.get(`${process.env.SERVER_ADDRESS}:${PORT}`);
-}, 300000);
