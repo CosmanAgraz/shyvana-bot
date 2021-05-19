@@ -150,4 +150,4 @@ app.listen(PORT || 1988);
 setInterval( () => 
 {
     https.get(`${process.env.SERVER_ADDRESS}:${PORT}`);
-}, 900000);
+}, 300000);
