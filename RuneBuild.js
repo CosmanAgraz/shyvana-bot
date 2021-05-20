@@ -1,7 +1,7 @@
 "use strict";
 
 const { runeData } = require("./util/getDataFromStatic");
-const { pickRandomElements, getRandomIndex } = require("./util/helperFunctions");
+const { pickRandomElements, getRandomIndex } = require("./util/arrayHelperFunctions");
 
 class RuneBuild {
     constructor()
