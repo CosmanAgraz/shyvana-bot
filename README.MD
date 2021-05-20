@@ -41,4 +41,4 @@ If you get an illegal build, please open an [issue](https://github.com/CosmanAgr
 v11.9.1
 
 ## Bot Version
-v1.1
+v1.2
