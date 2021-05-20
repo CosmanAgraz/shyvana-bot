@@ -1,6 +1,6 @@
 "use strict";
 
-const { pickRandomItems, pickRandomElements, getRandomIndex } = require("./util/helperFunctions");
+const { pickRandomItems, pickRandomElements, getRandomIndex } = require("./util/arrayHelperFunctions");
 const { champions, summonerSpells, items, championData } = require("./util/getDataFromStatic");
 const { RuneBuild } = require("./RuneBuild");
 
@@ -14,14 +14,14 @@ class BraveBuild {
         this.selectedChampion = champions[ getRandomIndex( champions.length ) ];
 
 
-        // TODO check if selected champion is melee
+        // check if selected champion is melee
         if (championData[this.selectedChampion].stats.attackrange < 199 )
         {
             this.isMelee = true;
         }
         
-        // TODO
         itemStack.push( pickRandomElements( items.mythic, 1) );
+
         // This special snowflake doesn't wear boots
         if (this.selectedChampion === "Cassiopeia")
         {
@@ -33,6 +33,7 @@ class BraveBuild {
             itemStack.push( pickRandomItems( items.legendary, 4, this.isMelee ) );
         }
 
+        // Object looks like [['mythic'],['boots'],[item, item, item ...]] so we flatten it 
         this.selectedItems = itemStack.flat();
 
         // Randomly select Q,W,E chars,
