@@ -33,6 +33,7 @@ async function downloadImage(champion)
     });
 }
 
+
 const getChampionImages = () =>
 {
     for ( const champion in championData )

@@ -7,6 +7,7 @@ const getRandomIndex = ( max ) =>
     return Math.floor( Math.random() * ( max ) );
 }
 
+
 const shuffle = array => 
 {
     // non-destructive
