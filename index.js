@@ -19,7 +19,6 @@ const app = express();
 const PORT = process.env.PORT || 1988;
 
 const icon = new Discord.MessageAttachment('./img/round-logo.png');
-const logo = new Discord.MessageAttachment('./img/legacylogo.png');
 
 client.on("message", async message => 
 {
@@ -115,7 +114,6 @@ client.on("message", async message =>
         **Rules**
         1. You are guaranteed a pair of shoes in your build unless you get Cassiopea.
         2. If you roll a champion you do not own, buy it.  (or roll again like the tryhard you are)
-        3. Runes?  HA!  Go look at probuilds.  As if **that** will save *you!*
         
         **LoL Patch**
         11.9.1
